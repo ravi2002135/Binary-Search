@@ -1,0 +1,40 @@
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        int n = nums.length;
+        int low = 1; // start from 1st index
+        int high = n - 2; // end with n - 2 index;
+        // if nums.length == 1 return nums[0];
+        if(n == 1){
+            return nums[0];
+        }
+        // check first element
+        if(nums[0] != nums[1]){
+            return nums[0];
+        }
+        // check last element
+        if(nums[n -1]!= nums[n - 2]){
+            return nums[n - 1];
+        }
+        while(low <= high){// iterate binary search
+            int mid = low + (high - low)/2;
+            // if mid element not equal to left and right element that`s means single element so return nums[mid]
+            if( nums[mid] != nums[mid + 1] && nums[mid] != nums[mid - 1]){
+                return nums[mid];
+            }
+            /* try to eliminate the left 
+            if mid is even and numd[mid] == nums[mid + 1]
+            or mid is odd and nums[mid] == nums[mid - 1]
+            eliminate left half
+            */
+
+            if((mid % 2 == 1 && nums[mid] == nums[mid - 1] )|| (mid % 2 == 0 && nums[mid] == nums[mid + 1] )){
+                low = mid + 1;
+            }
+            // other wise eliminate right half
+            else{
+                high = mid - 1;
+            }
+        }
+        return -1;
+    }
+}
